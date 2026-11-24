@@ -55,6 +55,11 @@ export const ReceptionPage: React.FC = () => {
   };
 
   const handleCallNext = (barberId: string) => {
+    const barber = barbers.find(b => b.id === barberId);
+    if (!barber || !canBarberCallNext(barber)) {
+      showToast('Barber cannot call next client while on break, off duty, or busy.');
+      return;
+    }
     const result = callNext(barberId);
     if (result.success && result.entry) {
       showToast(`Called Token ${result.entry.token} (${result.entry.customerName}) to Station.`);
@@ -150,10 +155,11 @@ export const ReceptionPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {onDutyBarbers.map((barber) => {
-            const isAvail = barber.status === 'AVAILABLE';
-            const isBusy = barber.status === 'BUSY';
-            const isBreak = barber.status === 'ON_BREAK';
+          {barbers.map((barber) => {
+            const isOffDuty = !barber.onDuty;
+            const isAvail = barber.onDuty && barber.status === 'AVAILABLE';
+            const isBusy = barber.onDuty && barber.status === 'BUSY';
+            const isBreak = barber.onDuty && barber.status === 'ON_BREAK';
 
             const activeEntry = barber.currentEntryId
               ? entries.find(e => e.id === barber.currentEntryId)
@@ -179,6 +185,8 @@ export const ReceptionPage: React.FC = () => {
                     ? 'bg-amber-50/50 border-amber-200 shadow-subtle'
                     : isBreak
                     ? 'bg-beige/40 border-muted-border/80 opacity-90'
+                    : isOffDuty
+                    ? 'bg-gray-100/60 border-muted-border/60 opacity-75'
                     : 'bg-cream border-muted-border shadow-subtle'
                 }`}
               >
@@ -197,6 +205,11 @@ export const ReceptionPage: React.FC = () => {
 
                     {/* Status Pill & Break Toggle */}
                     <div className="flex flex-col items-end gap-1.5">
+                      {isOffDuty && (
+                        <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-gray-200 text-gray-700">
+                          Off Duty
+                        </span>
+                      )}
                       {isAvail && (
                         <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">
                           Available
@@ -213,7 +226,7 @@ export const ReceptionPage: React.FC = () => {
                         </span>
                       )}
 
-                      {!isBusy && (
+                      {!isBusy && !isOffDuty && (
                         <button
                           type="button"
                           onClick={() => setBarberStatus(barber.id, isBreak ? 'AVAILABLE' : 'ON_BREAK')}
@@ -293,11 +306,17 @@ export const ReceptionPage: React.FC = () => {
                         className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
                           canCall
                             ? 'bg-sage-deep hover:bg-sage-dark text-beige-warm shadow-subtle active:scale-[0.98]'
-                            : 'bg-muted-border/60 text-muted cursor-not-allowed'
+                            : 'bg-muted-border/60 text-muted cursor-not-allowed opacity-75'
                         }`}
                       >
                         <Scissors className="w-3.5 h-3.5" />
-                        <span>Call Next Client</span>
+                        <span>
+                          {isBreak
+                            ? 'Station On Break'
+                            : isOffDuty
+                            ? 'Station Off Duty'
+                            : 'Call Next Client'}
+                        </span>
                       </button>
 
                       <div className="text-[11px] text-muted text-center mt-1.5 truncate">

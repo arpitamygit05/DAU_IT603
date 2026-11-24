@@ -1,32 +1,26 @@
-# React + TypeScript + Vite
+# The Style Atelier — Salon Queue Management Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This directory contains the front-end application source code for **The Style Atelier** Salon Queue Management System, built with React 19, TypeScript, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+- **Main Repository README:** See `../README.md` for project overview, live deployment URL, and complete documentation links.
+- **Agent & Developer Guidelines:** See [AGENTS.md](AGENTS.md) for architectural invariants and engineering instructions.
+- **Product Specifications & Business Logic:** See [docs/](docs/) for:
+  - [01-brief.md](docs/01-brief.md) — Problem statement, target users, features, exclusions, and look-and-feel.
+  - [02-screens.md](docs/02-screens.md) — Screen specifications, layout structure, actions, and empty/error states.
+  - [03-flows-rules.md](docs/03-flows-rules.md) — State transitions, barber matching rules, wait time formulas, and verification test checklist.
+  - [prompts.md](prompts.md) — Chronological prompt history and refinement recipes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Quick Start
+```bash
+# Install dependencies
+pnpm install
 
-## React Compiler
+# Start local development server (http://localhost:5173)
+pnpm run dev
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Run automated queue business logic test suite
+pnpm run test:rules
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# Run production build
+pnpm run build
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

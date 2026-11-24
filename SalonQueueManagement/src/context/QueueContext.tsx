@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import type { Barber, BarberStatus, QueueEntry, SalonSettings, Service, DailyStats } from '../types/queue';
-import { INITIAL_BARBERS, INITIAL_ENTRIES, INITIAL_SERVICES, INITIAL_SETTINGS } from '../data/initialData';
+import { INITIAL_BARBERS, INITIAL_ENTRIES, INITIAL_SERVICES, INITIAL_SETTINGS, SEEDED_ENTRY_IDS } from '../data/initialData';
 import {
   calculateDailyStats,
   findActiveEntryByPhone,
@@ -38,7 +38,8 @@ interface QueueContextType {
   addService: (service: Omit<Service, 'id'>) => void;
   toggleServiceActive: (serviceId: string) => void;
   updateSettings: (newSettings: Partial<SalonSettings>) => void;
-  resetDemoData: () => void;
+  resetToDefaults: () => void;
+  resetDemoData?: () => void;
 }
 
 const STORAGE_KEY = 'style_atelier_queue_state_v1';
@@ -89,7 +90,15 @@ export const QueueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed: PersistedState = JSON.parse(saved);
-        if (parsed.barbers && parsed.barbers.length > 0) return parsed.barbers;
+        if (parsed.barbers && parsed.barbers.length > 0) {
+          // If persisted barbers reference a seeded entry that is now gone, clear that ref
+          return parsed.barbers.map(b => {
+            if (b.currentEntryId && SEEDED_ENTRY_IDS.has(b.currentEntryId)) {
+              return { ...b, status: 'AVAILABLE' as const, currentEntryId: null, currentServiceStartTime: null };
+            }
+            return b;
+          });
+        }
       }
     } catch {
       // fallback
@@ -102,7 +111,11 @@ export const QueueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed: PersistedState = JSON.parse(saved);
-        if (parsed.entries && parsed.entries.length > 0) return parsed.entries;
+        if (parsed.entries) {
+          // Remove any known seeded demo entries; keep real user-created entries
+          const userEntries = parsed.entries.filter(e => !SEEDED_ENTRY_IDS.has(e.id));
+          return userEntries;
+        }
       }
     } catch {
       // fallback
@@ -563,8 +576,8 @@ export const QueueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     persistAndBroadcast(updated, services, barbers, entries, lastCalledId);
   }, [settings, services, barbers, entries, lastCalledId, persistAndBroadcast]);
 
-  // Reset demo data
-  const resetDemoData = useCallback(() => {
+  // Reset to clean defaults (empty queue, bundled barbers/services/settings)
+  const resetToDefaults = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
     setSettings(INITIAL_SETTINGS);
     setServices(INITIAL_SERVICES);
@@ -614,7 +627,8 @@ export const QueueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addService,
         toggleServiceActive,
         updateSettings,
-        resetDemoData,
+        resetToDefaults,
+        resetDemoData: resetToDefaults,
       }}
     >
       {children}

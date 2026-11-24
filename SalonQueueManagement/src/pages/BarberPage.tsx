@@ -91,6 +91,8 @@ export const BarberPage: React.FC = () => {
   const isBreak = currentBarber.status === 'ON_BREAK';
   const isBusy = currentBarber.status === 'BUSY';
   const isAvail = currentBarber.status === 'AVAILABLE';
+  const isOffDuty = !currentBarber.onDuty;
+  const canCallNext = isAvail && !isOffDuty && !isBreak && Boolean(nextEligible);
 
   const totalServiceDuration = activeEntry
     ? getTotalServiceDuration(activeEntry.serviceIds, services)
@@ -258,19 +260,39 @@ export const BarberPage: React.FC = () => {
               <p className="text-xs text-muted max-w-xs mx-auto mt-1">
                 {isBreak
                   ? 'You are on break. Resume duty to seat the next client.'
+                  : isOffDuty
+                  ? 'You are off duty. Enable your duty status to call clients.'
                   : 'Ready to call the next waiting client in queue.'}
               </p>
             </div>
 
-            {!isBreak && nextEligible && (
+            {nextEligible && (
               <button
                 type="button"
-                onClick={() => callNext(currentBarber.id)}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-sage-deep hover:bg-sage-dark text-beige-warm text-sm font-semibold shadow-subtle active:scale-[0.99] transition-all"
+                disabled={!canCallNext}
+                onClick={() => canCallNext && callNext(currentBarber.id)}
+                className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold shadow-subtle transition-all ${
+                  canCallNext
+                    ? 'bg-sage-deep hover:bg-sage-dark text-beige-warm active:scale-[0.99]'
+                    : 'bg-muted-border/60 text-muted cursor-not-allowed opacity-75'
+                }`}
               >
                 <Scissors className="w-4 h-4" />
-                <span>Call Next: {nextEligible.token} ({nextEligible.customerName})</span>
+                <span>
+                  {canCallNext
+                    ? `Call Next: ${nextEligible.token} (${nextEligible.customerName})`
+                    : isBreak
+                    ? `Cannot Call (${currentBarber.name} On Break)`
+                    : isOffDuty
+                    ? `Cannot Call (${currentBarber.name} Off Duty)`
+                    : 'Cannot Call Next'}
+                </span>
               </button>
+            )}
+            {(isBreak || isOffDuty) && (
+              <p className="text-xs text-muted">
+                {isOffDuty ? 'You are off duty. Go on duty to call clients.' : 'You are on break. Resume duty to seat the next client.'}
+              </p>
             )}
           </div>
         )}

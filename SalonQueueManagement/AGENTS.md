@@ -1,66 +1,86 @@
 # AGENTS.md — Agent & Developer Operational Guide
 
-Welcome to **The Style Atelier** Salon Queue Management System codebase. This guide provides AI agents and human developers with architectural context, code organization, and development guidelines.
+Welcome to **The Style Atelier** Salon Queue Management System codebase. This guide provides future coding agents with essential architectural context, operational rules, and development guidelines.
 
 ---
 
-## 1. System Overview
+## 1. Project Summary
 
-**The Style Atelier** is a modern salon queue website designed for live queue management across multiple form factors:
-- **Customer Mobile**: Queue joining, real-time ticket tracking, and wait time alerts.
-- **Receptionist Tablet**: Barber status overview, queue monitoring (>60m wait alerts), walk-in registration, and client calling.
-- **Barber Station Mobile**: Barber service timer, start/done actions, break toggle, and next eligible customer preview.
-- **Waiting Area TV Display**: High-contrast, large-format board with visual call pulses.
-- **Owner Admin Console**: Service catalog, barber duty roster, queue controls, and daily analytics.
+**The Style Atelier** is a self-contained, client-side salon queue management web application designed for contemporary grooming lounges. It streamlines customer arrivals, eliminates waiting room congestion, and provides dedicated, synchronized interfaces for customers, receptionists, barbers, waiting area displays, and salon owners.
 
----
-
-## 2. Documentation Links
-
-Detailed design and business documentation is located in the `docs/` directory:
-- [01-brief.md](docs/01-brief.md) — Product goal, target users, must-have scope, and explicit non-goals.
-- [02-screens.md](docs/02-screens.md) — Comprehensive screen specs, layout rules, and responsive design guidelines.
-- [03-flows-rules.md](docs/03-flows-rules.md) — Queue state transitions, barber preference logic, and wait time algorithms.
-- [prompts.md](prompts.md) — Record of prompt history and optional future refinement prompts.
+The application operates completely self-contained with **zero external backend or database dependencies**:
+- Bundled services, barbers, pricing, and salon settings are bundled in the application code (`src/data/initialData.ts`).
+- State changes persist in the user's browser `localStorage` (`style_atelier_queue_state_v1`).
+- Same-browser tab synchronization is handled via the native `BroadcastChannel` API (`style_atelier_broadcast_sync`).
+- **Limitation:** Cross-device synchronization is not supported because there is no remote database or server. State is local to the active browser instance.
 
 ---
 
-## 3. Directory Layout
+## 2. Stack & Run Commands
 
-```
-SalonQueueManagement/
-├── public/                 # Static assets (SVG logo, favicon)
-├── src/
-│   ├── components/         # Reusable UI components (Navbar, Footer, Modals)
-│   ├── context/            # React Context (QueueContext) with cross-tab BroadcastChannel sync
-│   ├── data/               # Realistic initial seed data for demo environment
-│   ├── pages/              # Screen implementations (Home, Join, Status, Reception, Barber, Display, Admin)
-│   ├── services/           # Pure queue engine business logic (queueLogic.ts)
-│   ├── types/              # TypeScript models and interfaces (queue.ts)
-│   ├── App.tsx             # Root router and layout shell
-│   ├── main.tsx            # Application entry point
-│   └── index.css           # Tailwind base styles and custom theme rules
-├── docs/                   # Product & architectural specs
-├── AGENTS.md               # This guide
-├── prompts.md              # Build prompts and future prompt recipes
-├── test-queue-rules.ts     # Automated queue business rules test suite
-└── package.json            # Scripts & dependencies
+- **Framework:** React 19, TypeScript, Vite, Tailwind CSS (v3.4.17)
+- **Icons:** Lucide React (`lucide-react`)
+- **Routing:** React Router DOM v7 (HTML5 client-side routing with Vercel rewrites)
+
+### Commands (run from inside the `SalonQueueManagement` directory):
+```bash
+# Start local development server
+pnpm run dev
+
+# Run automated queue logic verification test suite
+pnpm run test:rules
+
+# Run production build (typecheck + vite build)
+pnpm run build
+
+# Preview production build locally
+pnpm run preview
 ```
 
 ---
 
-## 4. Engineering Principles & Invariants
+## 3. Read the Documentation First
 
-1. **Pure Queue Engine (`src/services/queueLogic.ts`)**:
-   - Keep business rules pure, deterministic, and free of side effects.
-   - Respect barber preferences: Customers choosing a specific barber MUST never be assigned to another barber.
-   - Respect FCFS order for eligible customers.
-   - Single customer in chair per barber.
-   - 30-minute online cutoff before closing time.
-2. **Client-Side Storage & Same-Browser Tab Sync**:
-   - Handled via `BroadcastChannel('style_atelier_broadcast_sync')` backed by `localStorage` persistence.
-   - Synced across open tabs in the same browser session. Does not synchronize across separate physical devices.
-3. **Aesthetics & Tone**:
-   - Modern classic, calm sage green (`#52675A`, `#829581`, `#E7ECE5`) and warm beige (`#F4EFE5`, `#FBF9F4`).
-   - No leaves, plant icons, or botanical illustrations. Interface icons from Lucide only.
-   - Minimum 44px tap targets for mobile usability.
+Before making structural or algorithmic changes, read the documents in `docs/`:
+- [01-brief.md](docs/01-brief.md) — Problem statement, target users, must-have features, exclusions, and look and feel.
+- [02-screens.md](docs/02-screens.md) — Screen specifications, layout structure, actions, responsive behavior, and empty/error states for all 7 screens.
+- [03-flows-rules.md](docs/03-flows-rules.md) — Customer and walk-in flows, lifecycle states, barber matching rules, wait time formulas, closing cutoff, and verification test checklist.
+- [prompts.md](prompts.md) — Chronological history of build and refinement prompts.
+
+---
+
+## 4. Design & Brand Rules
+
+- **Salon Brand Name:** **The Style Atelier** (consistently used across title, headers, footers, and cards).
+- **Color Palette:**
+  - Sage Deep: `#52675A`
+  - Sage Pale: `#E7ECE5`
+  - Sage Medium: `#829581`
+  - Cream Background: `#FBF9F4`
+  - Warm Beige: `#F4EFE5`
+  - Terracotta Accent / Alert: `#C26D53`
+  - Gold Accent: `#C5A059`
+- **Typography:** Serif headings (`Playfair Display`), clean sans-serif body text (`Plus Jakarta Sans`), monospace timers.
+- **Language:** English only.
+- **Design Etiquette:**
+  - Strict exclusion of plant leaves, floral graphics, or botanical illustrations. Use clean interface icons from Lucide only.
+  - Touch targets must be at least 44px by 44px on interactive controls for mobile usability.
+  - No visible "Demo" or "Sample" labels on customer-facing or staff-facing screens.
+  - No invented salon street address or business telephone numbers.
+
+---
+
+## 5. Centralized Queue Logic Invariants
+
+All queue business rules are centralized in pure functions inside `src/services/queueLogic.ts`. Never disperse queue transition rules across individual UI components.
+
+1. **Deterministic Lifecycle:** `WAITING` → `CALLED` → `IN_CHAIR` → `DONE`. Waiting entries may be cancelled; called entries may be marked as no-show.
+2. **Terminal Invariance:** `DONE`, `CANCELLED`, and `NO_SHOW` are terminal states; they can never be re-opened or moved back into the active queue.
+3. **Barber Exclusivity:** If a client selects a specific barber, they must **never** be dispatched to a different barber.
+4. **First-Come, First-Served (FCFS):** Barbers calling next customer always serve the earliest waiting customer matching their station (either specific or `"ANY"`).
+5. **Barber Availability Constraints:**
+   - A barber marked `ON_BREAK` or off duty (`onDuty: false`) must **never** be able to call the next customer.
+   - Both the UI buttons (disabled with explanatory label) and underlying actions (`canBarberCallNext()` / `callNext()`) enforce this constraint.
+6. **Active Phone Duplicate Check:** A phone number may hold only one active token (`WAITING`, `CALLED`, `IN_CHAIR`) at a time.
+7. **30-Minute Online Cutoff:** Online joining automatically closes 30 minutes before salon closing time (`settings.closeTime`). In-person walk-ins remain accepted at reception.
+8. **Initial State:** The app starts with an empty queue (`INITIAL_ENTRIES = []`). Known seeded sample IDs are automatically purged on load while preserving real user entries.

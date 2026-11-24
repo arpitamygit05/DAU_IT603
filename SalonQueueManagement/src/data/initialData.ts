@@ -2,7 +2,7 @@ import type { Barber, QueueEntry, SalonSettings, Service } from '../types/queue'
 
 export const INITIAL_SETTINGS: SalonSettings = {
   salonName: 'The Style Atelier',
-  tagline: 'Modern Salon & Grooming Atelier (Demo)',
+  tagline: 'Modern Salon & Grooming Atelier',
   openTime: '09:00',
   closeTime: '21:00',
   isOpenToday: true,
@@ -83,9 +83,9 @@ export const INITIAL_BARBERS: Barber[] = [
     name: 'Rohan Patel',
     role: 'Beard & Skin Fade Specialist',
     onDuty: true,
-    status: 'BUSY',
-    currentEntryId: 'entry-12',
-    currentServiceStartTime: new Date(Date.now() - 14 * 60000).toISOString(),
+    status: 'AVAILABLE',
+    currentEntryId: null,
+    currentServiceStartTime: null,
     stationNumber: 2,
   },
   {
@@ -110,95 +110,15 @@ export const INITIAL_BARBERS: Barber[] = [
   }
 ];
 
-export const INITIAL_ENTRIES: QueueEntry[] = [
-  {
-    id: 'entry-10',
-    token: 'S-10',
-    customerName: 'Devansh Roy',
-    phone: '9876543210',
-    serviceIds: ['svc-1'],
-    preferredBarberId: 'barber-1',
-    assignedBarberId: 'barber-1',
-    status: 'DONE',
-    joinedAt: new Date(Date.now() - 95 * 60000).toISOString(),
-    calledAt: new Date(Date.now() - 65 * 60000).toISOString(),
-    inChairAt: new Date(Date.now() - 60 * 60000).toISOString(),
-    completedAt: new Date(Date.now() - 30 * 60000).toISOString(),
-    isWalkIn: false,
-  },
-  {
-    id: 'entry-11',
-    token: 'S-11',
-    customerName: 'Kunal Shah',
-    phone: '9823456781',
-    serviceIds: ['svc-2'],
-    preferredBarberId: 'ANY',
-    assignedBarberId: 'barber-2',
-    status: 'DONE',
-    joinedAt: new Date(Date.now() - 75 * 60000).toISOString(),
-    calledAt: new Date(Date.now() - 45 * 60000).toISOString(),
-    inChairAt: new Date(Date.now() - 40 * 60000).toISOString(),
-    completedAt: new Date(Date.now() - 15 * 60000).toISOString(),
-    isWalkIn: true,
-  },
-  {
-    id: 'entry-12',
-    token: 'S-12',
-    customerName: 'Aarav Malhotra',
-    phone: '9898765432',
-    serviceIds: ['svc-1'],
-    preferredBarberId: 'barber-2',
-    assignedBarberId: 'barber-2',
-    status: 'IN_CHAIR',
-    joinedAt: new Date(Date.now() - 40 * 60000).toISOString(),
-    calledAt: new Date(Date.now() - 16 * 60000).toISOString(),
-    inChairAt: new Date(Date.now() - 14 * 60000).toISOString(),
-    completedAt: null,
-    isWalkIn: false,
-  },
-  {
-    id: 'entry-13',
-    token: 'S-13',
-    customerName: 'Kabir Verma',
-    phone: '9876501234',
-    serviceIds: ['svc-2'],
-    preferredBarberId: 'barber-1',
-    assignedBarberId: null,
-    status: 'WAITING',
-    joinedAt: new Date(Date.now() - 65 * 60000).toISOString(),
-    calledAt: null,
-    inChairAt: null,
-    completedAt: null,
-    isWalkIn: false,
-  },
-  {
-    id: 'entry-14',
-    token: 'S-14',
-    customerName: 'Neil Sen',
-    phone: '9812345678',
-    serviceIds: ['svc-1', 'svc-3'],
-    preferredBarberId: 'ANY',
-    assignedBarberId: null,
-    status: 'WAITING',
-    joinedAt: new Date(Date.now() - 22 * 60000).toISOString(),
-    calledAt: null,
-    inChairAt: null,
-    completedAt: null,
-    isWalkIn: true,
-  },
-  {
-    id: 'entry-15',
-    token: 'S-15',
-    customerName: 'Aditya Mehta',
-    phone: '9822334455',
-    serviceIds: ['svc-4'],
-    preferredBarberId: 'barber-3',
-    assignedBarberId: null,
-    status: 'WAITING',
-    joinedAt: new Date(Date.now() - 10 * 60000).toISOString(),
-    calledAt: null,
-    inChairAt: null,
-    completedAt: null,
-    isWalkIn: false,
-  }
-];
+// Known seeded entry IDs from initial mock/sample data (entry-1 through entry-25).
+// QueueContext strips these from persisted localStorage on load
+// so the app starts with an empty queue on first visit, preserving any real user entries.
+export const SEEDED_ENTRY_IDS = new Set([
+  'entry-1', 'entry-2', 'entry-3', 'entry-4', 'entry-5',
+  'entry-6', 'entry-7', 'entry-8', 'entry-9', 'entry-10',
+  'entry-11', 'entry-12', 'entry-13', 'entry-14', 'entry-15',
+  'entry-16', 'entry-17', 'entry-18', 'entry-19', 'entry-20',
+  'entry-21', 'entry-22', 'entry-23', 'entry-24', 'entry-25'
+]);
+
+export const INITIAL_ENTRIES: QueueEntry[] = [];

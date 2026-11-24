@@ -1,107 +1,65 @@
-# Salon Queue Management System — The Style Atelier
+# The Style Atelier — Salon Queue Management System
 
-**Live website:** Deployment pending Vercel account authorization (see Deployment Instructions below)  
-**Public GitHub repository:** https://github.com/arpitamygit05/DAU_IT603
+**Live Website:** https://the-style-atelier.vercel.app  
+**Hosting Platform:** Vercel  
+**Staff Access Details:** No login, password, or PIN is required to access staff screens (Reception, Barber, Waiting Area Display, and Owner Settings); all views are openly accessible for direct evaluation.
 
 ---
 
-## Overview
+## About
 
-**The Style Atelier** is a modern, self-contained salon queue management web application designed for contemporary grooming lounges. It streamlines customer arrivals, eliminates physical waiting room congestion, and provides dedicated, synchronized interfaces for customers, receptionists, barbers, waiting area displays, and salon owners.
+**The Style Atelier** is a modern, self-contained salon queue management web application designed for contemporary grooming lounges. It streamlines client arrivals, eliminates physical waiting room congestion, and provides synchronized, dedicated interfaces across mobile, tablet, and desktop form factors.
 
-The project is built with **React 19, TypeScript, Vite, and Tailwind CSS**. It features a modern classic visual design rooted in a calming palette of sage green, warm beige, and cream, using clean interface iconography and comfortable tap targets (minimum 44px) across mobile, tablet, and desktop viewports.
+Built with **React 19, TypeScript, Vite, and Tailwind CSS**, the application features a modern classic visual design with a calming sage-green and warm beige palette, clear typographic hierarchy (`Playfair Display` and `Plus Jakarta Sans`), and comfortable tap targets (minimum 44px).
 
 ---
 
 ## Key Features
 
-### 1. Customer Home (`/`)
-- Live salon operating status banner showing current opening hours and queue availability.
-- Real-time waiting counter indicating how many clients are currently in line and the approximate wait time.
-- Station status strip showing all on-duty barbers with clear availability badges (`Available`, `In Chair`, `On Break`).
-- Direct action to join the digital queue online.
-- Integrated ticket lookup enabling returning customers to track an existing token (e.g. `S-14`) or phone number directly.
-- Curated services showcase displaying service categories, durations, and demo Indian Rupee (`₹`) pricing.
-
-### 2. Join Queue (`/join`)
-- Customer name input and validated 10-digit phone number.
-- Service selection allowing customers to choose between 1 and 3 active services.
-- Barber preference option: choose **"Any Available Barber (Fastest)"** or pick a specific barber.
-- Reactive live ticket summary calculating total duration, total price, and estimated wait before confirming.
-- **Single Active Spot Enforcement:** Restricts each phone number to one active queue entry at a time. Entering an already active number displays that customer's existing token and links directly to their ticket.
-- **30-Minute Online Cutoff:** Online joining automatically closes 30 minutes before salon closing time, while in-person walk-ins remain accepted at the reception desk.
-
-### 3. Live Customer Ticket Status (`/status/:id`)
-- Prominent sequential token badge (e.g. `S-14`) and live queue position (`#1 in line`, `#2 in line`).
-- Visual 4-stage lifecycle progression: `Waiting` → `Called` → `In Chair` → `Done`.
-- **Proximity Alert (Position #2):** Displays a high-visibility notice (*"Start coming to the salon — you're almost up!"*) when the customer is next in line.
-- **Turn Summon Banner:** Visual calling card (*"It's your turn! Please proceed to Station [X]"*) when assigned to a chair.
-- Cancellation dialog with confirmation prompt (allowed while in `Waiting` status).
-- One-tap link bookmarking and sharing.
-
-### 4. Receptionist Tablet Dashboard (`/reception`)
-- Tailored for landscape tablet and desktop front-desk displays.
-- Barber station overview cards showing current customer token, elapsed service timer, and a one-tap **"Call Next"** trigger.
-- Ordered waiting queue table displaying arrival order, customer details, selected services, and elapsed wait duration.
-- **Long-Wait Warning:** Visually flags any client waiting more than 60 minutes with an alert border and warning badge.
-- Quick actions:
-  - **Add Walk-In:** Registers walk-in customers on the fly, appending them to the end of the shared queue with a sequential token.
-  - **Mark No-Show:** Allows reception to mark a called client as a no-show if absent within 10 minutes, immediately releasing the barber station.
-  - **Cancel Ticket:** Removes waiting customers with a confirmation modal.
-
-### 5. Barber Station Terminal (`/barber/:name`)
-- Designed for mobile phones mounted near styling station mirrors.
-- Station profile selector for quick switching between barbers (e.g. Arjun Sharma, Rohan Patel, Vikram Joshi).
-- Availability toggle between **"Available"** and **"On Break"**.
-- Active client card showing token, customer name, and requested service checklist.
-- Digital service stopwatch tracking elapsed cutting time against estimated service duration.
-- **"Start Service"** and **"Service Completed · Done"** action buttons.
-- Real-time preview of the next eligible client waiting in line.
-
-### 6. Waiting Area TV Display (`/display`)
-- High-contrast dark theme (`#1E231E`) optimized for large wall-mounted TV monitors viewed from several metres away.
-- Integrated digital clock (seconds precision), date, and one-tap fullscreen toggle.
-- Station grid displaying current chair status and seated tokens.
-- Upcoming queue board showing the next 5 tokens in line with estimated wait times.
-- **Visual Call Notification:** Pulsing highlight banner when a customer is called to a station without requiring audio.
-
-### 7. Owner Settings & Analytics (`/admin`)
-- Daily performance dashboard tracking clients served, average wait time, no-show count, and estimated daily revenue in ₹ INR.
-- Queue management controls: toggle online joining on/off, adjust salon closing time, and toggle salon open/closed status.
-- Barber roster management: toggle on/off duty status and add new barbers.
-- Services catalog management: update service names, durations, prices, and active availability, or add new services.
-- Demo data reset button to restore default sample records.
+- **Customer Home (`/`):** Real-time salon opening status, current waiting counter, approximate wait time, live barber availability strip (`Available`, `In Chair`, `On Break`), token/phone lookup, and curated services showcase.
+- **Join Queue Form (`/join`):** Online queue registration with validated 10-digit phone number, multi-service selection (1–3 services), and barber preference (*"Any Available Barber"* or a specific stylist). Enforces a single active spot per phone number and automatically shuts down online registration 30 minutes before closing time.
+- **Live Ticket Status (`/status/:id`):** Real-time customer ticket tracking with sequential token badge (e.g. `S-14`), dynamic queue position, estimated wait time, 4-stage lifecycle tracker (`Waiting` → `Called` → `In Chair` → `Done`), high-visibility proximity notice at position #2 (*"Start coming to the salon"*), summon card when called, and one-tap cancellation.
+- **Reception Desk Dashboard (`/reception`):** Optimized for landscape tablets and desktop displays. Features a barber station grid with elapsed service timers, break toggles, one-click *"Call Next"* triggers, ordered waiting queue table (FCFS), >60m long-wait alert badges, walk-in registration modal (appended to tail of queue), and no-show / cancellation actions.
+- **Barber Station Terminal (`/barber/:name`):** Mobile interface mounted at styling stations. Includes barber switcher, availability toggle (`Available` ↔ `On Break`), active client card with service checklist, digital elapsed service stopwatch, and a preview of the next eligible waiting client. Guarded against calling when on break or off duty.
+- **Waiting Area TV Display (`/display`):** Fullscreen, high-contrast dark theme (`#1E231E`) for wall-mounted TV monitors. Displays a seconds-precision digital clock, current date, fullscreen toggle, station status grid, top-5 upcoming tickets with estimated waits, and a pulsing visual call announcement banner when a client is summoned.
+- **Owner Settings & Analytics (`/admin`):** Management console tracking daily performance metrics (clients served, average wait time, no-shows, estimated revenue in ₹ INR), queue controls (online queue toggle, operating hours adjustment), barber roster duty manager, services catalog editor (add/edit durations and prices), and clean state reset.
 
 ---
 
-## Queue Logic & Business Rules
+## Core Queue Logic Rules
 
-All queue mechanics are enforced by a pure, deterministic engine (`src/services/queueLogic.ts`):
-1. **Deterministic Lifecycle:** `WAITING` → `CALLED` → `IN_CHAIR` → `DONE`. Waiting entries may be cancelled; called entries may be marked as no-show.
-2. **Terminal Invariance:** Completed, cancelled, or no-show entries cannot transition back into an active state.
-3. **Barber Exclusivity:** A customer who selects a specific barber is never dispatched to a different barber.
-4. **First-Come, First-Served (FCFS):** The earliest waiting customer matching the barber's station (either requesting that barber or "Any Barber") is prioritized.
-5. **Single Seat Constraint:** A barber can serve only one client in chair at a time and cannot be called when on break or off duty.
-6. **Wait Time Formula:**
-   - **Specific Barber:** Remaining time of current client in chair + sum of service durations of all waiting customers ahead requesting that barber.
-   - **Any Barber:** Total remaining service duration of all waiting customers ahead divided by active working barbers.
+All queue mechanics are enforced by a pure, deterministic engine (`SalonQueueManagement/src/services/queueLogic.ts`):
+1. **First-Come, First-Served (FCFS):** Earliest arrivals matching a station's criteria are always prioritized.
+2. **Strict Barber Exclusivity:** A customer who chooses a specific barber is never assigned to a different barber.
+3. **Barber Availability Guard:** A barber marked `ON_BREAK` or off duty cannot call next customers; enforced by both disabled UI buttons and underlying logic.
+4. **Single Active Spot:** Each phone number is limited to one active ticket at a time.
+5. **30-Minute Online Cutoff:** Online registration closes 30 minutes before closing time; reception walk-ins continue until closing.
+6. **Client-Side Persistence:** Bundled initial services, barbers, and settings load automatically with zero external backend or database. State changes persist in the local browser's `localStorage` and synchronize across open tabs via `BroadcastChannel`. Cross-device synchronization is not supported without a shared database.
 
 ---
 
-## Data Architecture & Storage Limitations
+## Screen & Route Directory
 
-This application operates as a self-contained static web application with **zero external backend or database dependencies**:
-- **Bundled Demo Data:** Complete initial services, barbers, and sample queue entries are bundled in the application code and loaded immediately on first visit.
-- **Browser Persistence:** Changes made during testing (joining the queue, calling clients, completing services) are saved to browser `localStorage`. Refreshing the page retains your demo changes.
-- **Same-Browser Tab Synchronization:** State changes broadcast across open tabs in the same browser using the browser's native `BroadcastChannel` API.
-- **Honest Limitation:** Because there is no central database or server, changes made on one computer or device will **not** sync to a different person's physical device. Cross-tab sync operates strictly within the same browser instance.
+All routes operate directly via client-side routing:
+
+| Screen | Route | Target Device & Audience |
+| :--- | :--- | :--- |
+| **Customer Home** | `/` | Mobile / Desktop — Public landing & ticket lookup |
+| **Join Queue** | `/join` | Mobile / Desktop — Registration form |
+| **Customer Ticket Status** | `/status/:id` | Mobile — Real-time customer tracking |
+| **Reception Desk** | `/reception` | Tablet (Landscape) / Desktop — Front desk management |
+| **Barber Terminal (Arjun)** | `/barber/Arjun` | Mobile — Station 1 stylist controls |
+| **Barber Terminal (Rohan)** | `/barber/Rohan` | Mobile — Station 2 stylist controls |
+| **Barber Terminal (Vikram)** | `/barber/Vikram` | Mobile — Station 3 stylist controls |
+| **Waiting Area TV Display** | `/display` | Large TV Screen / Kiosk — Lounge monitor |
+| **Owner Admin Console** | `/admin` | Desktop / Tablet — Salon owner management |
 
 ---
 
-## Local Setup & Verification
+## Local Setup Instructions
 
 ### Prerequisites
-- Node.js 18+ (tested on Node v24.22.1)
+- Node.js 18+
 - `pnpm` (or `npm`)
 
 ### Installation & Run
@@ -112,61 +70,30 @@ cd SalonQueueManagement
 # 2. Install dependencies
 pnpm install
 
-# 3. Start development server
+# 3. Start local development server
 pnpm run dev
 ```
-The application will open at `http://localhost:5173`.
+Open `http://localhost:5173` in your browser.
 
-### Automated Verification Test Suite
-The project includes automated verification tests covering all 8 core queue business rules (FCFS ordering, barber preference exclusivity, barber availability constraints, phone duplicate detection, 30-minute online cutoff, queue position indexing, and pricing calculations):
+### Automated Queue Rules Test Suite
 ```bash
 # In SalonQueueManagement folder
 pnpm run test:rules
 ```
 
-### Production Build & Preview
+### Production Build
 ```bash
-# Build production bundle
+# In SalonQueueManagement folder
 pnpm run build
-
-# Preview production build locally
-pnpm run preview
 ```
 
 ---
 
-## Demo Route Directory
+## Documentation
 
-All routes work directly via client-side routing:
-- **Customer Home:** `/`
-- **Join Queue Form:** `/join`
-- **Sample Customer Ticket:** `/status/entry-12` (or create a new ticket at `/join`)
-- **Receptionist Tablet:** `/reception`
-- **Barber View (Arjun Sharma):** `/barber/Arjun`
-- **Barber View (Rohan Patel):** `/barber/Rohan`
-- **Barber View (Vikram Joshi):** `/barber/Vikram`
-- **Waiting Area TV Display:** `/display`
-- **Owner Admin Console:** `/admin`
-
----
-
-## Deployment Instructions (Vercel)
-
-The application is configured for deployment as a static site on Vercel:
-
-1. Sign in to [Vercel](https://vercel.com).
-2. Click **Add New Project** and connect your GitHub repository: `https://github.com/arpitamygit05/DAU_IT603`.
-3. In the project settings:
-   - **Root Directory:** Set to `SalonQueueManagement`
-   - **Framework Preset:** Vite
-   - **Build Command:** `pnpm run build` (or `npm run build`)
-   - **Output Directory:** `dist`
-4. Click **Deploy**.
-5. Once deployment finishes, verify the generated public `.vercel.app` URL and update the top of this `README.md`.
-
----
-
-## Coursework Archive
-
-### Linux Programming Laboratory
-**Task 1 to Task 5:** Completed successfully.
+Comprehensive project and design specifications are located in the `SalonQueueManagement/docs/` directory:
+- [01-brief.md](SalonQueueManagement/docs/01-brief.md) — Product brief, problem statement, users, features, and exclusions.
+- [02-screens.md](SalonQueueManagement/docs/02-screens.md) — Screen layouts, actions, responsive behavior, and empty/error states.
+- [03-flows-rules.md](SalonQueueManagement/docs/03-flows-rules.md) — Detailed flows, state transitions, mathematical formulas, and verification checklist.
+- [prompts.md](SalonQueueManagement/prompts.md) — Chronological history of prompts used.
+- [AGENTS.md](SalonQueueManagement/AGENTS.md) — Architectural invariants and guidelines for future coding agents.

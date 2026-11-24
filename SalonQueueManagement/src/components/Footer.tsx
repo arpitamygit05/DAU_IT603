@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQueue } from '../context/QueueContext';
-import { RotateCcw, Clock, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { RotateCcw, Clock, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { resetDemoData, settings } = useQueue();
+  const { resetToDefaults, settings } = useQueue();
 
   const handleReset = () => {
-    if (window.confirm('Reset all queue data, barbers, and services to initial demo state?')) {
-      resetDemoData();
+    if (window.confirm('Reset all queue data, barbers, and services to default state?')) {
+      resetToDefaults();
       window.location.reload();
     }
   };
@@ -32,11 +32,11 @@ export const Footer: React.FC = () => {
               {settings.tagline}. Calm, deliberate salon craft with digital queue tracking.
             </p>
             <div className="pt-2 text-xs text-beige-warm/60">
-              © {new Date().getFullYear()} The Style Atelier (Demo System)
+              © {new Date().getFullYear()} The Style Atelier
             </div>
           </div>
 
-          {/* Salon Hours & Location */}
+          {/* Salon Hours */}
           <div className="space-y-2 text-xs">
             <h4 className="font-serif text-sm font-semibold tracking-wider text-beige-warm uppercase mb-3">
               Studio & Hours
@@ -44,18 +44,10 @@ export const Footer: React.FC = () => {
             <div className="flex items-start gap-2 text-beige-warm/80">
               <Clock className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <p>Daily Operating Hours (Demo)</p>
+                <p>Daily Operating Hours</p>
                 <p className="text-beige-warm/60">{settings.openTime} – {settings.closeTime}</p>
                 <p className="text-[11px] text-gold/90 mt-1">Online Queue closes {settings.cutoffMinutesBeforeClosing}m prior</p>
               </div>
-            </div>
-            <div className="flex items-start gap-2 text-beige-warm/80 pt-2">
-              <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-              <span>Demo Salon Studio (Sample Environment)</span>
-            </div>
-            <div className="flex items-center gap-2 text-beige-warm/80 pt-1">
-              <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-              <span>Demo Contact: (555) 0199 (Sample Only)</span>
             </div>
           </div>
 
@@ -93,10 +85,10 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Demo Controls & Storage Explanation */}
+          {/* Storage Info */}
           <div className="space-y-3 text-xs">
             <h4 className="font-serif text-sm font-semibold tracking-wider text-beige-warm uppercase mb-3">
-              Browser Demo Storage
+              Browser Storage
             </h4>
             <div className="p-3 rounded-lg bg-sage-deep/60 border border-sage/40 space-y-2">
               <div className="flex items-center gap-2 text-beige-warm/90">
@@ -104,7 +96,7 @@ export const Footer: React.FC = () => {
                 <span className="font-medium">Client-Side Persistence</span>
               </div>
               <p className="text-[11px] text-beige-warm/70 leading-normal">
-                Demo state is saved in your browser's localStorage and syncs between tabs in this browser (not between different devices).
+                State is saved in your browser's localStorage and syncs across tabs in this browser only — not across different devices.
               </p>
               <button
                 type="button"
@@ -112,7 +104,7 @@ export const Footer: React.FC = () => {
                 className="w-full mt-2 inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold rounded-md bg-beige-warm/15 hover:bg-beige-warm/25 text-beige-warm transition-colors border border-beige-warm/20"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reset Demo State</span>
+                <span>Reset to Defaults</span>
               </button>
             </div>
           </div>

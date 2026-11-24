@@ -23,6 +23,7 @@ const mockBarbers: Barber[] = [
   { id: 'b1', name: 'Barber One', role: 'Stylist', onDuty: true, status: 'AVAILABLE', currentEntryId: null, currentServiceStartTime: null, stationNumber: 1 },
   { id: 'b2', name: 'Barber Two', role: 'Stylist', onDuty: true, status: 'ON_BREAK', currentEntryId: null, currentServiceStartTime: null, stationNumber: 2 },
   { id: 'b3', name: 'Barber Three', role: 'Stylist', onDuty: true, status: 'BUSY', currentEntryId: 'active-1', currentServiceStartTime: new Date().toISOString(), stationNumber: 3 },
+  { id: 'b4', name: 'Barber Four', role: 'Stylist', onDuty: false, status: 'AVAILABLE', currentEntryId: null, currentServiceStartTime: null, stationNumber: 4 },
 ];
 
 const mockEntries: QueueEntry[] = [
@@ -59,6 +60,9 @@ console.log('✓ Rule 3: Customer choosing specific barber is queued for them');
 console.assert(canBarberCallNext(mockBarbers[0]) === true, 'b1 should be able to call next');
 console.assert(canBarberCallNext(mockBarbers[1]) === false, 'b2 (on break) must NOT call next');
 console.assert(canBarberCallNext(mockBarbers[2]) === false, 'b3 (busy) must NOT call next');
+// off-duty barber check
+const offDutyBarber: Barber = { id: 'b4', name: 'Barber Four', role: 'Stylist', onDuty: false, status: 'AVAILABLE', currentEntryId: null, currentServiceStartTime: null, stationNumber: 4 };
+console.assert(canBarberCallNext(offDutyBarber) === false, 'off-duty barber must NOT call next');
 console.log('✓ Rule 4: Only available on-duty barbers with no active customer can call next');
 
 // Test 5: Phone number duplication check
@@ -71,7 +75,7 @@ console.log('✓ Rule 5: Active phone duplication enforced; completed phones all
 // Test 6: Online queue availability cutoff 30 minutes before closing
 const settings: SalonSettings = {
   salonName: 'The Style Atelier',
-  tagline: 'Modern Salon & Grooming Atelier (Demo)',
+  tagline: 'Modern Salon & Grooming Atelier',
   openTime: '09:00',
   closeTime: '21:00',
   isOpenToday: true,

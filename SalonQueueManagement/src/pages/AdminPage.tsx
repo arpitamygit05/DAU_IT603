@@ -28,7 +28,7 @@ export const AdminPage: React.FC = () => {
     toggleBarberOnDuty,
     setBarberStatus,
     addBarber,
-    resetDemoData
+    resetToDefaults
   } = useQueue();
 
   // Modals & form state
@@ -110,8 +110,6 @@ export const AdminPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs uppercase tracking-widest text-sage-deep font-semibold">Management Console</span>
-            <span className="text-muted">•</span>
-            <span className="text-xs text-muted">Demo Owner Access</span>
           </div>
           <h1 className="font-serif text-3xl font-bold text-dark-heading mt-0.5">
             Owner Settings & Control
@@ -121,15 +119,15 @@ export const AdminPage: React.FC = () => {
         <button
           type="button"
           onClick={() => {
-            if (window.confirm('Reset all demo data (queue, barbers, services) to pristine defaults?')) {
-              resetDemoData();
-              showToast('Demo data reset to initial state.');
+            if (window.confirm('Reset all queue data (queue, barbers, services) to defaults?')) {
+              resetToDefaults();
+              showToast('Queue data reset to defaults.');
             }
           }}
           className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl bg-beige hover:bg-beige-dark border border-muted-border text-dark transition-colors"
         >
           <RotateCcw className="w-3.5 h-3.5 text-sage" />
-          <span>Reset Demo Data</span>
+          <span>Reset to Defaults</span>
         </button>
       </div>
 

@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
                 </span>
               </div>
               <p className="text-[11px] uppercase tracking-widest text-muted font-sans font-medium">
-                Salon & Grooming Lounge (Demo)
+                Salon & Grooming Lounge
               </p>
             </div>
           </Link>
