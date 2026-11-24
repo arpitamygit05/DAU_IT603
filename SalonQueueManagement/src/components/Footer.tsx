@@ -22,17 +22,17 @@ export const Footer: React.FC = () => {
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-beige-warm text-sage-deep flex items-center justify-center font-serif font-bold text-lg">
-                A
+                S
               </div>
               <span className="font-serif font-bold text-lg tracking-wider text-beige-warm uppercase">
                 {settings.salonName}
               </span>
             </div>
             <p className="text-xs text-beige-warm/75 leading-relaxed font-sans">
-              {settings.tagline}. Calm, deliberate salon craft with seamless live queuing.
+              {settings.tagline}. Calm, deliberate salon craft with digital queue tracking.
             </p>
             <div className="pt-2 text-xs text-beige-warm/60">
-              © {new Date().getFullYear()} Aura Grooming. Demo System.
+              © {new Date().getFullYear()} The Style Atelier (Demo System)
             </div>
           </div>
 
@@ -44,18 +44,18 @@ export const Footer: React.FC = () => {
             <div className="flex items-start gap-2 text-beige-warm/80">
               <Clock className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <p>Monday – Sunday</p>
+                <p>Daily Operating Hours (Demo)</p>
                 <p className="text-beige-warm/60">{settings.openTime} – {settings.closeTime}</p>
                 <p className="text-[11px] text-gold/90 mt-1">Online Queue closes {settings.cutoffMinutesBeforeClosing}m prior</p>
               </div>
             </div>
             <div className="flex items-start gap-2 text-beige-warm/80 pt-2">
               <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-              <span>Sindhu Bhavan Road, Bodakdev, Ahmedabad, Gujarat 380054</span>
+              <span>Demo Salon Studio (Sample Environment)</span>
             </div>
             <div className="flex items-center gap-2 text-beige-warm/80 pt-1">
               <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-              <span>+91 98765 43210</span>
+              <span>Demo Contact: (555) 0199 (Sample Only)</span>
             </div>
           </div>
 
@@ -93,18 +93,18 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Demo Controls & Quality Guarantee */}
+          {/* Demo Controls & Storage Explanation */}
           <div className="space-y-3 text-xs">
             <h4 className="font-serif text-sm font-semibold tracking-wider text-beige-warm uppercase mb-3">
-              System State
+              Browser Demo Storage
             </h4>
             <div className="p-3 rounded-lg bg-sage-deep/60 border border-sage/40 space-y-2">
               <div className="flex items-center gap-2 text-beige-warm/90">
                 <ShieldCheck className="w-4 h-4 text-gold" />
-                <span className="font-medium">Active Demo Storage</span>
+                <span className="font-medium">Client-Side Persistence</span>
               </div>
               <p className="text-[11px] text-beige-warm/70 leading-normal">
-                State synchronizes automatically across browser tabs via BroadcastChannel.
+                Demo state is saved in your browser's localStorage and syncs between tabs in this browser (not between different devices).
               </p>
               <button
                 type="button"

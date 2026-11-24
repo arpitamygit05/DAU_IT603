@@ -1,7 +1,7 @@
 # 01-brief.md — Product Brief & Scope
 
 ## 1. Product Goal
-Create a modern salon queue website that enables clients to join a live digital queue from their phones, monitor their exact position and dynamic estimated wait time, and receive an alert when their chair is ready. The system simultaneously empowers receptionists with landscape tablet visibility, barbers with station-focused mobile controls, salon visitors with an ultra-readable waiting area TV display, and salon owners with service, duty, and analytics controls.
+Create a modern salon queue website for **The Style Atelier** that enables clients to join a live digital queue from their phones, monitor their exact position and dynamic estimated wait time, and receive an alert when their chair is ready. The system simultaneously empowers receptionists with landscape tablet visibility, barbers with station-focused mobile controls, salon visitors with an ultra-readable waiting area TV display, and salon owners with service, duty, and analytics controls.
 
 ---
 
@@ -31,10 +31,10 @@ Create a modern salon queue website that enables clients to join a live digital 
 
 ## 3. Must-Have Scope
 
-- Clean typographic branding: "Aura Grooming Lounge".
+- Clean typographic branding: **The Style Atelier**.
 - Complete 7-screen implementation (`/`, `/join`, `/status/:id`, `/reception`, `/barber/:name`, `/display`, `/admin`).
 - Centralized queue business engine with rigorous barber preference matching and FCFS ordering.
-- Reactive cross-tab multi-screen synchronization using `BroadcastChannel` and `localStorage`.
+- Reactive same-browser tab synchronization using `BroadcastChannel` and `localStorage`.
 - Phone validation (10 digits) with duplicate active spot prevention.
 - Visual alerts:
   - 2nd position alert: *"Start coming to the salon"*.
@@ -43,16 +43,17 @@ Create a modern salon queue website that enables clients to join a live digital 
   - Waiting area TV visual pulse banner when a client is called.
 - Fully responsive styling matching the Sage Green (`#52675A`, `#829581`, `#E7ECE5`) & Warm Beige (`#F4EFE5`, `#FBF9F4`) palette.
 - Strict exclusion of plant/leaf patterns and icons.
-- Indian Rupee (`₹`) pricing and realistic demo services.
+- Transparent Indian Rupee (`₹`) pricing and realistic demo services.
 
 ---
 
 ## 4. Explicit Exclusions (Non-Goals)
 
 To maintain focus, reliability, and zero external dependency risk during demo operations, the following are intentionally excluded:
+- External database backend (all state persists in the user's browser `localStorage`).
 - Online payment gateways (payment occurs in person at the salon).
 - Future calendar date appointment scheduling (this is a live walk-in/queue system).
-- Paid SMS/WhatsApp automated gateway integration (status URLs are instant and bookmarkable).
+- Paid SMS/WhatsApp automated gateway integration.
 - Loyalty point systems.
 - Multi-branch or franchise management.
 - Multilingual translation toggles (interface is in unified English).

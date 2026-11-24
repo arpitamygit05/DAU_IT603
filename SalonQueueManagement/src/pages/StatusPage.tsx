@@ -297,7 +297,7 @@ export const StatusPage: React.FC = () => {
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">
                   Status: Completed
                 </span>
-                <p className="font-serif text-lg font-bold text-dark">Thank You for Visiting Aura!</p>
+                <p className="font-serif text-lg font-bold text-dark">Thank You for Visiting The Style Atelier!</p>
                 <p className="text-xs text-muted">
                   We hope you had an exceptional grooming experience today.
                 </p>

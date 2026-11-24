@@ -1,8 +1,8 @@
 import type { Barber, QueueEntry, SalonSettings, Service } from '../types/queue';
 
 export const INITIAL_SETTINGS: SalonSettings = {
-  salonName: 'Aura Grooming Lounge',
-  tagline: 'Modern Gentlemen’s Salon & Grooming Atelier',
+  salonName: 'The Style Atelier',
+  tagline: 'Modern Salon & Grooming Atelier (Demo)',
   openTime: '09:00',
   closeTime: '21:00',
   isOpenToday: true,
@@ -85,7 +85,7 @@ export const INITIAL_BARBERS: Barber[] = [
     onDuty: true,
     status: 'BUSY',
     currentEntryId: 'entry-12',
-    currentServiceStartTime: new Date(Date.now() - 14 * 60000).toISOString(), // Started 14 min ago
+    currentServiceStartTime: new Date(Date.now() - 14 * 60000).toISOString(),
     stationNumber: 2,
   },
   {
@@ -165,7 +165,7 @@ export const INITIAL_ENTRIES: QueueEntry[] = [
     preferredBarberId: 'barber-1',
     assignedBarberId: null,
     status: 'WAITING',
-    joinedAt: new Date(Date.now() - 65 * 60000).toISOString(), // >60m waiting test case
+    joinedAt: new Date(Date.now() - 65 * 60000).toISOString(),
     calledAt: null,
     inChairAt: null,
     completedAt: null,
@@ -192,7 +192,7 @@ export const INITIAL_ENTRIES: QueueEntry[] = [
     customerName: 'Aditya Mehta',
     phone: '9822334455',
     serviceIds: ['svc-4'],
-    preferredBarberId: 'barber-3', // Vikram Joshi who is on break!
+    preferredBarberId: 'barber-3',
     assignedBarberId: null,
     status: 'WAITING',
     joinedAt: new Date(Date.now() - 10 * 60000).toISOString(),

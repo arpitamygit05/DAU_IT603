@@ -70,8 +70,8 @@ console.log('✓ Rule 5: Active phone duplication enforced; completed phones all
 
 // Test 6: Online queue availability cutoff 30 minutes before closing
 const settings: SalonSettings = {
-  salonName: 'Test',
-  tagline: 'Test',
+  salonName: 'The Style Atelier',
+  tagline: 'Modern Salon & Grooming Atelier (Demo)',
   openTime: '09:00',
   closeTime: '21:00',
   isOpenToday: true,

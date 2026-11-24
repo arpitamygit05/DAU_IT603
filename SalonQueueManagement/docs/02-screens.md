@@ -1,6 +1,6 @@
 # 02-screens.md — Screen Specifications & Layout Hierarchy
 
-This document describes all 7 screens of the Aura Salon Queue Management System, detailing layout components, user actions, and responsive breakpoints.
+This document describes all 7 screens of **The Style Atelier** Salon Queue Management System, detailing layout components, user actions, and responsive breakpoints.
 
 ---
 
@@ -9,7 +9,7 @@ This document describes all 7 screens of the Aura Salon Queue Management System,
 - **Route:** `/`
 - **Primary Audience:** Mobile clients & prospective salon visitors.
 - **Key Components:**
-  - **Brand Header:** Wordmark *"AURA GROOMING LOUNGE — Atelier"*.
+  - **Brand Header:** Wordmark *"The Style Atelier"*.
   - **Operating Status Pill:** Real-time badge indicating whether live queue is open, current queue count, and salon closing time.
   - **Hero Section:** Value proposition, prominent *"Join the Queue Online"* call-to-action, and an integrated Token/Phone quick lookup box.
   - **Live Queue Snapshot Card:** Live counter of customers currently waiting (`#`), approximate wait time (`~X mins`), and a live status strip of on-duty barbers (Available, In Chair, On Break).

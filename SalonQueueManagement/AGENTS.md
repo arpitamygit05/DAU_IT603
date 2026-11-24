@@ -1,12 +1,12 @@
 # AGENTS.md — Agent & Developer Operational Guide
 
-Welcome to the **Aura Salon Queue Management System** codebase. This guide provides AI agents and human developers with architectural context, code organization, and development guidelines.
+Welcome to **The Style Atelier** Salon Queue Management System codebase. This guide provides AI agents and human developers with architectural context, code organization, and development guidelines.
 
 ---
 
 ## 1. System Overview
 
-Aura is a modern salon queue website designed for live queue management across multiple form factors:
+**The Style Atelier** is a modern salon queue website designed for live queue management across multiple form factors:
 - **Customer Mobile**: Queue joining, real-time ticket tracking, and wait time alerts.
 - **Receptionist Tablet**: Barber status overview, queue monitoring (>60m wait alerts), walk-in registration, and client calling.
 - **Barber Station Mobile**: Barber service timer, start/done actions, break toggle, and next eligible customer preview.
@@ -43,6 +43,7 @@ SalonQueueManagement/
 ├── docs/                   # Product & architectural specs
 ├── AGENTS.md               # This guide
 ├── prompts.md              # Build prompts and future prompt recipes
+├── test-queue-rules.ts     # Automated queue business rules test suite
 └── package.json            # Scripts & dependencies
 ```
 
@@ -56,9 +57,9 @@ SalonQueueManagement/
    - Respect FCFS order for eligible customers.
    - Single customer in chair per barber.
    - 30-minute online cutoff before closing time.
-2. **Cross-Tab Synchronization**:
-   - Handled via `BroadcastChannel('aura_salon_broadcast_sync')` backed by `localStorage` persistence.
-   - Every mutation updates state, saves to localStorage, and broadcasts an update message.
+2. **Client-Side Storage & Same-Browser Tab Sync**:
+   - Handled via `BroadcastChannel('style_atelier_broadcast_sync')` backed by `localStorage` persistence.
+   - Synced across open tabs in the same browser session. Does not synchronize across separate physical devices.
 3. **Aesthetics & Tone**:
    - Modern classic, calm sage green (`#52675A`, `#829581`, `#E7ECE5`) and warm beige (`#F4EFE5`, `#FBF9F4`).
    - No leaves, plant icons, or botanical illustrations. Interface icons from Lucide only.

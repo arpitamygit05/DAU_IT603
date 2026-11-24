@@ -49,7 +49,7 @@ export const DisplayPage: React.FC = () => {
       <header className="flex items-center justify-between pb-6 border-b border-[#3D4F44]">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-[#52675A] flex items-center justify-center text-[#F4EFE5] font-serif font-bold text-2xl shadow-elevated">
-            A
+            S
           </div>
           <div>
             <div className="flex items-center gap-3">

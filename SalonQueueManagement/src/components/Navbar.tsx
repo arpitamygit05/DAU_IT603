@@ -34,19 +34,16 @@ export const Navbar: React.FC = () => {
           {/* Brand Wordmark & Typographic Logo */}
           <Link to="/" className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-sage rounded-lg p-1">
             <div className="w-10 h-10 rounded-xl bg-sage-deep flex items-center justify-center text-beige-warm shadow-subtle group-hover:bg-sage-dark transition-colors">
-              <span className="font-serif font-bold text-xl tracking-wider">A</span>
+              <span className="font-serif font-bold text-xl tracking-wider">S</span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-xl tracking-wider text-dark-heading uppercase">
-                  Aura
-                </span>
-                <span className="text-xs uppercase tracking-widest text-sage font-medium font-sans border-l border-muted-border pl-2">
-                  Atelier
+                <span className="font-serif font-bold text-lg sm:text-xl tracking-wider text-dark-heading uppercase">
+                  The Style Atelier
                 </span>
               </div>
               <p className="text-[11px] uppercase tracking-widest text-muted font-sans font-medium">
-                Grooming Lounge
+                Salon & Grooming Lounge (Demo)
               </p>
             </div>
           </Link>

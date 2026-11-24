@@ -41,8 +41,8 @@ interface QueueContextType {
   resetDemoData: () => void;
 }
 
-const STORAGE_KEY = 'aura_salon_queue_state_v1';
-const SYNC_CHANNEL_NAME = 'aura_salon_broadcast_sync';
+const STORAGE_KEY = 'style_atelier_queue_state_v1';
+const SYNC_CHANNEL_NAME = 'style_atelier_broadcast_sync';
 
 interface PersistedState {
   settings: SalonSettings;
@@ -61,10 +61,12 @@ export const QueueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed: PersistedState = JSON.parse(saved);
-        if (parsed.settings) return parsed.settings;
+        if (parsed.settings && parsed.settings.salonName === INITIAL_SETTINGS.salonName) {
+          return parsed.settings;
+        }
       }
     } catch {
-      // fallback
+      // fallback to bundled demo settings
     }
     return INITIAL_SETTINGS;
   });
