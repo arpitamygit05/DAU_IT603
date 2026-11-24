@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  
+  body {
+    background-color: #FBF9F4;
+    color: #292D29;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  /* Accessible touch targets on mobile: minimum 44px */
+  button, a, input, select, textarea, [role="button"] {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* TV display glow animation */
+  @keyframes callPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(194, 109, 83, 0.4);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 16px rgba(194, 109, 83, 0);
+      transform: scale(1.02);
+    }
+  }
+
+  .animate-call-pulse {
+    animation: callPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
